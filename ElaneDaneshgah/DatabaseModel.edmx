@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_elanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_classroom">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_exception">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_term" Type="int" Nullable="false" />
+          <Property Name="date" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="classroomID" Type="int" />
+          <Property Name="Start_time" Type="nvarchar" MaxLength="100" />
+          <Property Name="end_time" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tb_teacher">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_teacher_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="teacherID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="courseID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_term">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="teacherID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="courseID" Type="int" Nullable="false" />
+          <Property Name="classroomID" Type="int" Nullable="false" />
+          <Property Name="Day" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Start_time" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="end_time" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbl_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tb_exception_tb_exception">
+          <End Role="tb_classroom" Type="Self.tb_classroom" Multiplicity="0..1" />
+          <End Role="tb_exception" Type="Self.tb_exception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_classroom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_exception">
+              <PropertyRef Name="classroomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_exception_tb_term">
+          <End Role="tb_term" Type="Self.tb_term" Multiplicity="1" />
+          <End Role="tb_exception" Type="Self.tb_exception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_term">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_exception">
+              <PropertyRef Name="id_term" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_teacher_course_tb_teacher">
+          <End Role="tb_teacher" Type="Self.tb_teacher" Multiplicity="1" />
+          <End Role="tb_teacher_course" Type="Self.tb_teacher_course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_teacher">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_teacher_course">
+              <PropertyRef Name="teacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_teacher_course_tbl_course">
+          <End Role="tbl_course" Type="Self.tbl_course" Multiplicity="1" />
+          <End Role="tb_teacher_course" Type="Self.tb_teacher_course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_teacher_course">
+              <PropertyRef Name="courseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_term_tb_classroom">
+          <End Role="tb_classroom" Type="Self.tb_classroom" Multiplicity="1" />
+          <End Role="tb_term" Type="Self.tb_term" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_classroom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_term">
+              <PropertyRef Name="classroomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_term_tb_teacher">
+          <End Role="tb_teacher" Type="Self.tb_teacher" Multiplicity="1" />
+          <End Role="tb_term" Type="Self.tb_term" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_teacher">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_term">
+              <PropertyRef Name="teacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_term_tbl_course">
+          <End Role="tbl_course" Type="Self.tbl_course" Multiplicity="1" />
+          <End Role="tb_term" Type="Self.tb_term" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_term">
+              <PropertyRef Name="courseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_elanModelStoreContainer">
+          <EntitySet Name="tb_classroom" EntityType="Self.tb_classroom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_exception" EntityType="Self.tb_exception" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_teacher" EntityType="Self.tb_teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_teacher_course" EntityType="Self.tb_teacher_course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_term" EntityType="Self.tb_term" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_course" EntityType="Self.tbl_course" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tb_exception_tb_exception" Association="Self.FK_tb_exception_tb_exception">
+            <End Role="tb_classroom" EntitySet="tb_classroom" />
+            <End Role="tb_exception" EntitySet="tb_exception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_exception_tb_term" Association="Self.FK_tb_exception_tb_term">
+            <End Role="tb_term" EntitySet="tb_term" />
+            <End Role="tb_exception" EntitySet="tb_exception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_teacher_course_tb_teacher" Association="Self.FK_tb_teacher_course_tb_teacher">
+            <End Role="tb_teacher" EntitySet="tb_teacher" />
+            <End Role="tb_teacher_course" EntitySet="tb_teacher_course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_teacher_course_tbl_course" Association="Self.FK_tb_teacher_course_tbl_course">
+            <End Role="tbl_course" EntitySet="tbl_course" />
+            <End Role="tb_teacher_course" EntitySet="tb_teacher_course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_term_tb_classroom" Association="Self.FK_tb_term_tb_classroom">
+            <End Role="tb_classroom" EntitySet="tb_classroom" />
+            <End Role="tb_term" EntitySet="tb_term" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_term_tb_teacher" Association="Self.FK_tb_term_tb_teacher">
+            <End Role="tb_teacher" EntitySet="tb_teacher" />
+            <End Role="tb_term" EntitySet="tb_term" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_term_tbl_course" Association="Self.FK_tb_term_tbl_course">
+            <End Role="tbl_course" EntitySet="tbl_course" />
+            <End Role="tb_term" EntitySet="tb_term" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_elanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tb_classroom">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tb_exception" Relationship="Self.FK_tb_exception_tb_exception" FromRole="tb_classroom" ToRole="tb_exception" />
+          <NavigationProperty Name="tb_term" Relationship="Self.FK_tb_term_tb_classroom" FromRole="tb_classroom" ToRole="tb_term" />
+        </EntityType>
+        <EntityType Name="tb_exception">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_term" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="String" Nullable="false" />
+          <Property Name="classroomID" Type="Int32" />
+          <Property Name="Start_time" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="end_time" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tb_classroom" Relationship="Self.FK_tb_exception_tb_exception" FromRole="tb_exception" ToRole="tb_classroom" />
+          <NavigationProperty Name="tb_term" Relationship="Self.FK_tb_exception_tb_term" FromRole="tb_exception" ToRole="tb_term" />
+        </EntityType>
+        <EntityType Name="tb_teacher">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tb_teacher_course" Relationship="Self.FK_tb_teacher_course_tb_teacher" FromRole="tb_teacher" ToRole="tb_teacher_course" />
+          <NavigationProperty Name="tb_term" Relationship="Self.FK_tb_term_tb_teacher" FromRole="tb_teacher" ToRole="tb_term" />
+        </EntityType>
+        <EntityType Name="tb_teacher_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="teacherID" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="courseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_teacher" Relationship="Self.FK_tb_teacher_course_tb_teacher" FromRole="tb_teacher_course" ToRole="tb_teacher" />
+          <NavigationProperty Name="tbl_course" Relationship="Self.FK_tb_teacher_course_tbl_course" FromRole="tb_teacher_course" ToRole="tbl_course" />
+        </EntityType>
+        <EntityType Name="tb_term">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="teacherID" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="courseID" Type="Int32" Nullable="false" />
+          <Property Name="classroomID" Type="Int32" Nullable="false" />
+          <Property Name="Day" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Start_time" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="end_time" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tb_classroom" Relationship="Self.FK_tb_term_tb_classroom" FromRole="tb_term" ToRole="tb_classroom" />
+          <NavigationProperty Name="tb_exception" Relationship="Self.FK_tb_exception_tb_term" FromRole="tb_term" ToRole="tb_exception" />
+          <NavigationProperty Name="tb_teacher" Relationship="Self.FK_tb_term_tb_teacher" FromRole="tb_term" ToRole="tb_teacher" />
+          <NavigationProperty Name="tbl_course" Relationship="Self.FK_tb_term_tbl_course" FromRole="tb_term" ToRole="tbl_course" />
+        </EntityType>
+        <EntityType Name="tbl_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tb_teacher_course" Relationship="Self.FK_tb_teacher_course_tbl_course" FromRole="tbl_course" ToRole="tb_teacher_course" />
+          <NavigationProperty Name="tb_term" Relationship="Self.FK_tb_term_tbl_course" FromRole="tbl_course" ToRole="tb_term" />
+        </EntityType>
+        <Association Name="FK_tb_exception_tb_exception">
+          <End Role="tb_classroom" Type="Self.tb_classroom" Multiplicity="0..1" />
+          <End Role="tb_exception" Type="Self.tb_exception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_classroom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_exception">
+              <PropertyRef Name="classroomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_term_tb_classroom">
+          <End Role="tb_classroom" Type="Self.tb_classroom" Multiplicity="1" />
+          <End Role="tb_term" Type="Self.tb_term" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_classroom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_term">
+              <PropertyRef Name="classroomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_exception_tb_term">
+          <End Role="tb_term" Type="Self.tb_term" Multiplicity="1" />
+          <End Role="tb_exception" Type="Self.tb_exception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_term">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_exception">
+              <PropertyRef Name="id_term" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_teacher_course_tb_teacher">
+          <End Role="tb_teacher" Type="Self.tb_teacher" Multiplicity="1" />
+          <End Role="tb_teacher_course" Type="Self.tb_teacher_course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_teacher">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_teacher_course">
+              <PropertyRef Name="teacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_term_tb_teacher">
+          <End Role="tb_teacher" Type="Self.tb_teacher" Multiplicity="1" />
+          <End Role="tb_term" Type="Self.tb_term" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_teacher">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_term">
+              <PropertyRef Name="teacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_teacher_course_tbl_course">
+          <End Role="tbl_course" Type="Self.tbl_course" Multiplicity="1" />
+          <End Role="tb_teacher_course" Type="Self.tb_teacher_course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_teacher_course">
+              <PropertyRef Name="courseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_term_tbl_course">
+          <End Role="tbl_course" Type="Self.tbl_course" Multiplicity="1" />
+          <End Role="tb_term" Type="Self.tb_term" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tb_term">
+              <PropertyRef Name="courseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_elanEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tb_classroom" EntityType="Self.tb_classroom" />
+          <EntitySet Name="tb_exception" EntityType="Self.tb_exception" />
+          <EntitySet Name="tb_teacher" EntityType="Self.tb_teacher" />
+          <EntitySet Name="tb_teacher_course" EntityType="Self.tb_teacher_course" />
+          <EntitySet Name="tb_term" EntityType="Self.tb_term" />
+          <EntitySet Name="tbl_course" EntityType="Self.tbl_course" />
+          <AssociationSet Name="FK_tb_exception_tb_exception" Association="Self.FK_tb_exception_tb_exception">
+            <End Role="tb_classroom" EntitySet="tb_classroom" />
+            <End Role="tb_exception" EntitySet="tb_exception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_term_tb_classroom" Association="Self.FK_tb_term_tb_classroom">
+            <End Role="tb_classroom" EntitySet="tb_classroom" />
+            <End Role="tb_term" EntitySet="tb_term" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_exception_tb_term" Association="Self.FK_tb_exception_tb_term">
+            <End Role="tb_term" EntitySet="tb_term" />
+            <End Role="tb_exception" EntitySet="tb_exception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_teacher_course_tb_teacher" Association="Self.FK_tb_teacher_course_tb_teacher">
+            <End Role="tb_teacher" EntitySet="tb_teacher" />
+            <End Role="tb_teacher_course" EntitySet="tb_teacher_course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_term_tb_teacher" Association="Self.FK_tb_term_tb_teacher">
+            <End Role="tb_teacher" EntitySet="tb_teacher" />
+            <End Role="tb_term" EntitySet="tb_term" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_teacher_course_tbl_course" Association="Self.FK_tb_teacher_course_tbl_course">
+            <End Role="tbl_course" EntitySet="tbl_course" />
+            <End Role="tb_teacher_course" EntitySet="tb_teacher_course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_term_tbl_course" Association="Self.FK_tb_term_tbl_course">
+            <End Role="tbl_course" EntitySet="tbl_course" />
+            <End Role="tb_term" EntitySet="tb_term" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_elanModelStoreContainer" CdmEntityContainer="db_elanEntities">
+          <EntitySetMapping Name="tb_classroom">
+            <EntityTypeMapping TypeName="db_elanModel.tb_classroom">
+              <MappingFragment StoreEntitySet="tb_classroom">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_exception">
+            <EntityTypeMapping TypeName="db_elanModel.tb_exception">
+              <MappingFragment StoreEntitySet="tb_exception">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_term" ColumnName="id_term" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="classroomID" ColumnName="classroomID" />
+                <ScalarProperty Name="Start_time" ColumnName="Start_time" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_teacher">
+            <EntityTypeMapping TypeName="db_elanModel.tb_teacher">
+              <MappingFragment StoreEntitySet="tb_teacher">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_teacher_course">
+            <EntityTypeMapping TypeName="db_elanModel.tb_teacher_course">
+              <MappingFragment StoreEntitySet="tb_teacher_course">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="teacherID" ColumnName="teacherID" />
+                <ScalarProperty Name="courseID" ColumnName="courseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_term">
+            <EntityTypeMapping TypeName="db_elanModel.tb_term">
+              <MappingFragment StoreEntitySet="tb_term">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="teacherID" ColumnName="teacherID" />
+                <ScalarProperty Name="courseID" ColumnName="courseID" />
+                <ScalarProperty Name="classroomID" ColumnName="classroomID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Start_time" ColumnName="Start_time" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_course">
+            <EntityTypeMapping TypeName="db_elanModel.tbl_course">
+              <MappingFragment StoreEntitySet="tbl_course">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

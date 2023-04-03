@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="db_elanModelStoreContainer" CdmEntityContainer="db_elanEntities">
+    <EntitySetMapping Name="tb_classroom">
+      <EntityTypeMapping TypeName="db_elanModel.tb_classroom">
+        <MappingFragment StoreEntitySet="tb_classroom">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_exception">
+      <EntityTypeMapping TypeName="db_elanModel.tb_exception">
+        <MappingFragment StoreEntitySet="tb_exception">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_term" ColumnName="id_term" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="classroomID" ColumnName="classroomID" />
+          <ScalarProperty Name="Start_time" ColumnName="Start_time" />
+          <ScalarProperty Name="end_time" ColumnName="end_time" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_teacher">
+      <EntityTypeMapping TypeName="db_elanModel.tb_teacher">
+        <MappingFragment StoreEntitySet="tb_teacher">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_teacher_course">
+      <EntityTypeMapping TypeName="db_elanModel.tb_teacher_course">
+        <MappingFragment StoreEntitySet="tb_teacher_course">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="teacherID" ColumnName="teacherID" />
+          <ScalarProperty Name="courseID" ColumnName="courseID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_term">
+      <EntityTypeMapping TypeName="db_elanModel.tb_term">
+        <MappingFragment StoreEntitySet="tb_term">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="teacherID" ColumnName="teacherID" />
+          <ScalarProperty Name="courseID" ColumnName="courseID" />
+          <ScalarProperty Name="classroomID" ColumnName="classroomID" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="Start_time" ColumnName="Start_time" />
+          <ScalarProperty Name="end_time" ColumnName="end_time" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_course">
+      <EntityTypeMapping TypeName="db_elanModel.tbl_course">
+        <MappingFragment StoreEntitySet="tbl_course">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

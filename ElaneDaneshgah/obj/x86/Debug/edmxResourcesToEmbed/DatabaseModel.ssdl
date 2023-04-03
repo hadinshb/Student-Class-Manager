@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_elanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tb_classroom">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_exception">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_term" Type="int" Nullable="false" />
+    <Property Name="date" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="classroomID" Type="int" />
+    <Property Name="Start_time" Type="nvarchar" MaxLength="100" />
+    <Property Name="end_time" Type="nvarchar" MaxLength="100" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="tb_teacher">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_teacher_course">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="teacherID" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="courseID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_term">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="teacherID" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="courseID" Type="int" Nullable="false" />
+    <Property Name="classroomID" Type="int" Nullable="false" />
+    <Property Name="Day" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Start_time" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="end_time" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="tbl_course">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tb_exception_tb_exception">
+    <End Role="tb_classroom" Type="Self.tb_classroom" Multiplicity="0..1" />
+    <End Role="tb_exception" Type="Self.tb_exception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_classroom">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tb_exception">
+        <PropertyRef Name="classroomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_exception_tb_term">
+    <End Role="tb_term" Type="Self.tb_term" Multiplicity="1" />
+    <End Role="tb_exception" Type="Self.tb_exception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_term">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tb_exception">
+        <PropertyRef Name="id_term" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_teacher_course_tb_teacher">
+    <End Role="tb_teacher" Type="Self.tb_teacher" Multiplicity="1" />
+    <End Role="tb_teacher_course" Type="Self.tb_teacher_course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_teacher">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tb_teacher_course">
+        <PropertyRef Name="teacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_teacher_course_tbl_course">
+    <End Role="tbl_course" Type="Self.tbl_course" Multiplicity="1" />
+    <End Role="tb_teacher_course" Type="Self.tb_teacher_course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_course">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tb_teacher_course">
+        <PropertyRef Name="courseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_term_tb_classroom">
+    <End Role="tb_classroom" Type="Self.tb_classroom" Multiplicity="1" />
+    <End Role="tb_term" Type="Self.tb_term" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_classroom">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tb_term">
+        <PropertyRef Name="classroomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_term_tb_teacher">
+    <End Role="tb_teacher" Type="Self.tb_teacher" Multiplicity="1" />
+    <End Role="tb_term" Type="Self.tb_term" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_teacher">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tb_term">
+        <PropertyRef Name="teacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_term_tbl_course">
+    <End Role="tbl_course" Type="Self.tbl_course" Multiplicity="1" />
+    <End Role="tb_term" Type="Self.tb_term" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_course">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tb_term">
+        <PropertyRef Name="courseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_elanModelStoreContainer">
+    <EntitySet Name="tb_classroom" EntityType="Self.tb_classroom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_exception" EntityType="Self.tb_exception" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_teacher" EntityType="Self.tb_teacher" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_teacher_course" EntityType="Self.tb_teacher_course" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_term" EntityType="Self.tb_term" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_course" EntityType="Self.tbl_course" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tb_exception_tb_exception" Association="Self.FK_tb_exception_tb_exception">
+      <End Role="tb_classroom" EntitySet="tb_classroom" />
+      <End Role="tb_exception" EntitySet="tb_exception" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_exception_tb_term" Association="Self.FK_tb_exception_tb_term">
+      <End Role="tb_term" EntitySet="tb_term" />
+      <End Role="tb_exception" EntitySet="tb_exception" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_teacher_course_tb_teacher" Association="Self.FK_tb_teacher_course_tb_teacher">
+      <End Role="tb_teacher" EntitySet="tb_teacher" />
+      <End Role="tb_teacher_course" EntitySet="tb_teacher_course" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_teacher_course_tbl_course" Association="Self.FK_tb_teacher_course_tbl_course">
+      <End Role="tbl_course" EntitySet="tbl_course" />
+      <End Role="tb_teacher_course" EntitySet="tb_teacher_course" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_term_tb_classroom" Association="Self.FK_tb_term_tb_classroom">
+      <End Role="tb_classroom" EntitySet="tb_classroom" />
+      <End Role="tb_term" EntitySet="tb_term" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_term_tb_teacher" Association="Self.FK_tb_term_tb_teacher">
+      <End Role="tb_teacher" EntitySet="tb_teacher" />
+      <End Role="tb_term" EntitySet="tb_term" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_term_tbl_course" Association="Self.FK_tb_term_tbl_course">
+      <End Role="tbl_course" EntitySet="tbl_course" />
+      <End Role="tb_term" EntitySet="tb_term" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

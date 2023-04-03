@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4ab43ffb33e243e6b9415a47927071bc" Name="Diagram1">
+        <EntityTypeShape EntityType="db_elanModel.tb_classroom" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_elanModel.tb_exception" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_elanModel.tb_teacher" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_elanModel.tb_teacher_course" Width="1.5" PointX="9" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_elanModel.tb_term" Width="1.5" PointX="6" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_elanModel.tbl_course" Width="1.5" PointX="3.75" PointY="7.25" IsExpanded="true" />
+        <AssociationConnector Association="db_elanModel.FK_tb_exception_tb_exception" ManuallyRouted="false" />
+        <AssociationConnector Association="db_elanModel.FK_tb_term_tb_classroom" ManuallyRouted="false" />
+        <AssociationConnector Association="db_elanModel.FK_tb_exception_tb_term" ManuallyRouted="false" />
+        <AssociationConnector Association="db_elanModel.FK_tb_teacher_course_tb_teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="db_elanModel.FK_tb_term_tb_teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="db_elanModel.FK_tb_teacher_course_tbl_course" ManuallyRouted="false" />
+        <AssociationConnector Association="db_elanModel.FK_tb_term_tbl_course" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
